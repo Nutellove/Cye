@@ -1,0 +1,20 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<form id="question_form" action="answer.json" method="GET">
+
+  <fieldset>
+    <legend>Your Question</legend>
+    <input id="question_input" name="question" type="text" size="42" value="" />
+  </fieldset>
+
+  <fieldset>
+    <legend>Your Effort</legend>
+    <p>Please type in <em id="answer_expected">"The only real valuable thing is intuition."</em></p>
+    <input id="answer_input" type="text" size="42" value="" />
+  </fieldset>
+
+  <input id="question_submit" type="submit" value="ASK" />
+
+</form>
+{% endblock %}

@@ -9,6 +9,7 @@
 app/bootstrap*
 
 # Symfony directories
+cache/*
 vendor/*
 */logs/*
 */cache/*
