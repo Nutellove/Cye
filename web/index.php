@@ -15,6 +15,11 @@ function is_localhost () {
     return (in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1','::1',)));
 }
 
+function random_culture_line ($lang='en') {
+    $f = file(CYE_ROOT_PATH . 'data/' . $lang . '/culture');
+    return trim($f[array_rand($f)]);
+}
+
 // App
 
 $app = new Application();
@@ -35,7 +40,9 @@ $twig = new Twig_Environment($twig_loader, array(
 // Route Aliases
 
 $app->get('/', function(Application $app) use ($twig) {
-    $page = $twig->render('question_form.html.twig', array());
+    $page = $twig->render('question_form.html.twig', array(
+        'culture' => random_culture_line(),
+    ));
     return $page;
 });
 
