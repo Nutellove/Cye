@@ -3,26 +3,34 @@ Feature: Answering the target's question during step 2
   As an initiated user
   I should be able to type something with a different predetermined display on-screen
 
-# step 2 input text field => find a better name
 
 Background:
-  Given I am on the question page
-  And I am focused on the step 2 input text field
-  And the expected step 2 answer is 'Please answer me'
+  Given I am on the home page
+  And I fill 'Who am I ?' in the question input
+  And I am focused on the culture input
+  And the expected culture input is 'The only real valuable thing is intuition.'
 
 Scenario: Activating the Stealth Mode©
-  Given the step 2 input text field is empty
+  Given the culture input is empty
   And the stealth mode is not activated
   When I type '<'
   Then the stealth mode should be activated
+  And the culture input should be empty
 
-Scenario:
-  Given the step 2 input text field is empty
-  When I type '<s3cret< answer me'
-  Then the step 2 input text field should hold 'Please answer me'
+Scenario: Deactivating the Stealth Mode©
+  Given the stealth mode is activated
+  When I type '<'
+  Then the stealth mode should not be activated
+  And the culture input should not end by '<'
 
-Scenario:
-  Given the step 2 input text field is empty
-  When I type '<s3cret< answer me'
+Scenario: Filling the culture input
+  Given the culture input is empty
+  When I type '<lurove<ly real valuable thing is intuition.'
+  Then the culture input should hold 'The only real valuable thing is intuition.'
+
+Scenario: Submitting
+  Given the culture input is empty
+  When I type '<lurove<ly real valuable thing is intuition.'
   And I submit
-  Then I should see 's3cret'
+  And I wait for 5 seconds
+  Then I should see 'lurove'

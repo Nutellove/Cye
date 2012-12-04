@@ -11,6 +11,7 @@ Experimenting BDD with various js libs :
 ## USE
 
 `web/index.php` contains most of the PHP glue
+
 `view/` contains the twig templates
 
 ## INSTALL
