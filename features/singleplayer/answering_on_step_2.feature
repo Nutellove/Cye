@@ -1,18 +1,20 @@
+@javascript
 Feature: Answering the target's question during step 2
   In order to write stealthily the answer the Cye should give
   As an initiated user
   I should be able to type something with a different predetermined display on-screen
 
-
 Background:
   Given I am on the homepage
   And I fill in "question" with "Who am I ?"
-  And I focus on the culture input
+  And I focus on the "culture" field
   And the expected culture input is "The only real valuable thing is intuition."
+
 
 Scenario: Activating the Stealth Mode©
   Given the culture input is empty
   And the stealth mode is not activated
+  And I focus on the "culture" field
   When I type "<"
   Then the stealth mode should be activated
   And the culture input should be empty

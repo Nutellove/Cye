@@ -28,6 +28,8 @@ Get composer, install, and make sure the `cache/` folder is writeable.
 
 Create your `http://cye.local` that points to `web`, or change the `base_url` in `behat.yml`.
 
+Follow [Selenium setup](http://docs.behat.org/cookbook/behat_and_mink.html#test-in-browser-selenium2-session).
+
 Then, simply run
 
     bin/behat

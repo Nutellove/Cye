@@ -31,15 +31,15 @@ class FeatureContext extends MinkContext
 
 
 
-
-
     /**
-     * @Given /^I am focused on the (.+) input$/
+     * @Given /^I focus on the "(?P<field>(?:[^"]|\\")*)" field$/
      */
-    public function iAmFocusedOnTheInput($name)
+    public function iFocusOnTheField($field)
     {
         throw new PendingException();
     }
+
+
 
     /**
      * @Given /^the expected culture input is \"([^\"]*)\"$/
