@@ -4,6 +4,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
+use Behat\MinkExtension\Context\MinkContext;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
@@ -15,7 +16,7 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext
+class FeatureContext extends MinkContext
 {
     /**
      * Initializes context.
@@ -29,22 +30,8 @@ class FeatureContext extends BehatContext
     }
 
 
-    /**
-     * @Given /^I am on the home page$/
-     */
-    public function iAmOnTheHomePage()
-    {
-        //assertTrue(true);
-        throw new PendingException();
-    }
 
-    /**
-     * @Given /^I fill \'([^\']*)\' in the (.+) input$/
-     */
-    public function iFillInTheInput($value, $name)
-    {
-        throw new PendingException();
-    }
+
 
     /**
      * @Given /^I am focused on the (.+) input$/
@@ -55,7 +42,7 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^the expected culture input is \'([^\']*)\'$/
+     * @Given /^the expected culture input is \"([^\"]*)\"$/
      */
     public function theExpectedCultureInputIs($value)
     {
@@ -79,7 +66,7 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^the (.+) input should not end by \'([^\']*)\'$/
+     * @Then /^the (.+) input should not end by \"([^\"]*)\"$/
      */
     public function theInputShouldNotEndBy($name, $suffix)
     {
@@ -87,15 +74,15 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^the (.+) input should hold \'([^\']*)\'$/
+     * @Then /^the (.+) input should hold \"([^\"]*)\"$/
      */
     public function theInputShouldHold($name, $value)
     {
-        throw new PendingException();
+        throw new PendingException(); // use parent
     }
 
     /**
-     * @When /^I type \'([^\']*)\'$/
+     * @When /^I type \"([^\"]*)\"$/
      */
     public function iType($string)
     {
@@ -114,15 +101,6 @@ class FeatureContext extends BehatContext
      * @Given /^I wait for (\d+) seconds$/
      */
     public function iWaitForSeconds($how_many)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * Provided $text should be somewhere in the page
-     * @Then /^I should see \'([^\']*)\'$/
-     */
-    public function iShouldSee($text)
     {
         throw new PendingException();
     }

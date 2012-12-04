@@ -23,3 +23,11 @@ Get composer, install, and make sure the `cache/` folder is writeable.
 
     sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx cache
     sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx cache
+
+## TEST
+
+Create your `http://cye.local` that points to `web`, or change the `base_url` in `behat.yml`.
+
+Then, simply run
+
+    bin/behat
