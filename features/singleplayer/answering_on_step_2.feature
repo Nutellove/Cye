@@ -1,7 +1,7 @@
 Feature: Answering the target's question during step 2
-  In order to write stealthily the answer the Eye should give
+  In order to write stealthily the answer the Cye should give
   As an initiated user
-  I should be able to type something with a different display on-screen
+  I should be able to type something with a different predetermined display on-screen
 
 # step 2 input text field => find a better name
 
