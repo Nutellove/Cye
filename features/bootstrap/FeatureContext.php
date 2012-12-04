@@ -7,11 +7,9 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
 // Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/Assert/Functions.php';
 //
 
 /**
@@ -30,15 +28,135 @@ class FeatureContext extends BehatContext
         // Initialize your context here
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+
+    /**
+     * @Given /^I am on the home page$/
+     */
+    public function iAmOnTheHomePage()
+    {
+        //assertTrue(true);
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I fill \'([^\']*)\' in the (.+) input$/
+     */
+    public function iFillInTheInput($value, $name)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I am focused on the (.+) input$/
+     */
+    public function iAmFocusedOnTheInput($name)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^the expected culture input is \'([^\']*)\'$/
+     */
+    public function theExpectedCultureInputIs($value)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^the (.+) input is empty$/
+     */
+    public function theInputIsEmpty($name)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the (.+) input should be empty$/
+     */
+    public function theInputShouldBeEmpty($name)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the (.+) input should not end by \'([^\']*)\'$/
+     */
+    public function theInputShouldNotEndBy($name, $suffix)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the (.+) input should hold \'([^\']*)\'$/
+     */
+    public function theInputShouldHold($name, $value)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I type \'([^\']*)\'$/
+     */
+    public function iType($string)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I submit$/
+     */
+    public function iSubmit()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^I wait for (\d+) seconds$/
+     */
+    public function iWaitForSeconds($how_many)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * Provided $text should be somewhere in the page
+     * @Then /^I should see \'([^\']*)\'$/
+     */
+    public function iShouldSee($text)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^the stealth mode is not activated$/
+     */
+    public function theStealthModeIsNotActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^the stealth mode is activated$/
+     */
+    public function theStealthModeIsActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the stealth mode should be activated$/
+     */
+    public function theStealthModeShouldBeActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the stealth mode should not be activated$/
+     */
+    public function theStealthModeShouldNotBeActivated()
+    {
+        throw new PendingException();
+    }
+
 }
