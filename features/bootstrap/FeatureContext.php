@@ -29,6 +29,15 @@ class FeatureContext extends MinkContext
         // Initialize your context here
     }
 
+    protected function execJs ($script)
+    {
+        $this->getSession()->executeScript($script);
+    }
+
+    protected function evalJs ($script)
+    {
+        return $this->getSession()->evaluateScript($script);
+    }
 
 
     /**
@@ -36,33 +45,32 @@ class FeatureContext extends MinkContext
      */
     public function iFocusOnTheField($field)
     {
-        throw new PendingException();
+        $this->execJs("document.getElementById('{$field}_input').focus();");
     }
-
-
 
     /**
      * @Given /^the expected culture input is \"([^\"]*)\"$/
      */
     public function theExpectedCultureInputIs($value)
     {
-        throw new PendingException();
+        $this->execJs("document.getElementById('answer_expected').innerHTML = '{$value}';");
     }
 
     /**
-     * @Given /^the (.+) input is empty$/
+     * @Given /^the "(?P<field>(?:[^"]|\\")*)" field is empty$/
      */
-    public function theInputIsEmpty($name)
+    public function theFieldIsEmpty($field)
     {
-        throw new PendingException();
+        $this->execJs("document.getElementById('{$field}_input').value = '';");
     }
 
     /**
-     * @Then /^the (.+) input should be empty$/
+     * @Then /^the "(?P<field>(?:[^"]|\\")*)" field should be empty$/
      */
-    public function theInputShouldBeEmpty($name)
+    public function theFieldShouldBeEmpty($name)
     {
-        throw new PendingException();
+        $emptiness = $this->evalJs("document.getElementById('{$field}_input').value == '';");
+        assertTrue($emptiness);
     }
 
     /**

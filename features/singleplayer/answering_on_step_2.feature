@@ -12,12 +12,12 @@ Background:
 
 
 Scenario: Activating the Stealth Mode©
-  Given the culture input is empty
+  Given the "culture" field is empty
   And the stealth mode is not activated
   And I focus on the "culture" field
   When I type "<"
   Then the stealth mode should be activated
-  And the culture input should be empty
+  And the "culture" field should be empty
 
 Scenario: Deactivating the Stealth Mode©
   Given the stealth mode is activated
@@ -26,12 +26,12 @@ Scenario: Deactivating the Stealth Mode©
   And the culture input should not end by "<"
 
 Scenario: Filling the culture input
-  Given the culture input is empty
+  Given the "culture" field is empty
   When I type "<lurove<ly real valuable thing is intuition."
   Then the culture input should hold "The only real valuable thing is intuition."
 
 Scenario: Submitting
-  Given the culture input is empty
+  Given the "culture" field is empty
   When I type "<lurove<ly real valuable thing is intuition."
   And I submit
   And I wait for 5 seconds
