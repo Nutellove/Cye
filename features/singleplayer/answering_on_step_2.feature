@@ -24,13 +24,13 @@ Scenario: Submitting
   Given the "culture" field is empty
   When I type "<lurove<ly real valuable thing is intuition." in the "culture" field
   And I press "Ask"
-  And I wait for 1 second
+  And I wait for 5 second
   Then I should see "lurove"
 
 Scenario: Submitting, with backspaces
   Given the "culture" field is empty
   When I type "<lurp\bove<ly real valuable thing is intuition." in the "culture" field
   And I press "Ask"
-  And I wait for 1 second
+  And I wait for 5 second
   Then I should see "lurove"
 

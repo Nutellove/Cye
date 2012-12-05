@@ -1,6 +1,11 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
+
+<style type="text/css">
+
+</style>
+
 <form id="question_form" action="answer.json" method="GET">
 
   <fieldset>
@@ -14,9 +19,13 @@
     <input id="culture_input" name="culture" type="text" size="42" value="" />
   </fieldset>
 
-  <input id="question_submit" type="submit" value="Ask" />
+  <input id="question_submit" class="btn btn-primary" type="submit" value="Ask" disabled="true" />
 
 </form>
+
+  <br>
+  <br>
+  <br>
 
 <div id="question_answer"></div>
 
@@ -24,141 +33,20 @@
   <script type="text/javascript" src="js/vendor/mootools-core-1.4.5.js"></script>
   <script type="text/javascript" src="/js/vendor/mootools-more-1.4.0.1.js"></script>
   <script type="text/javascript" src="/js/vendor/Base64.js"></script>
+  <script type="text/javascript" src="/js/cye.js"></script>
 
   <script type="text/javascript">
 
-    document.id('culture_input').addEvent('keydown', function(e){
-      //console.log('keydown '+ e.key);
-    });
-
-    document.id('culture_input').addEvent('keyup', function(e){
-      //console.log('keyup '+ e.key);
-    });
-
-    document.id('culture_input').addEvent('keypress', function(e){
-      //console.log(e); // Syn Event, not a Mootools Event
-      //console.log('keypress '+ e.key);
-      //e.stop();
-      //addCharacterToField(String.fromCharCode(e.code), this);
-    });
-
-    function addCharacterToField (character, field) {
-      field.setAttribute('value', field.getAttribute('value') + character);
-    }
-
-    function setCaretPosition (elemId, caretPos) {
-      var el = document.getElementById(elemId);
-
-      if (el !== null) {
-
-        if (el.createTextRange) {
-          var range = el.createTextRange();
-          range.move('character', caretPos);
-          range.select();
-          return true;
-        } else {
-          if (el.selectionStart || el.selectionStart === 0) { // (el.selectionStart === 0 added for Firefox bug)
-            el.focus();
-            el.setSelectionRange(caretPos, caretPos);
-            return true;
-          } else { // fail city, fortunately this never happens (as far as I've tested) :)
-            el.focus();
-            return false;
-          }
-        }
-      }
-
-      return false;
-    }
-
-    var Cye = {};
-
-    Cye.SmartField = new Class ({
-
-      Codes: {
-        'ctrl': 17,
-        'back': 8
-      },
-
-      Implements: [Options],
-
-      options: {
-        trigger: '<',
-        getExpectedValue: function(){return 'Expected value'}
-      },
-
-      initialize: function (field, options) {
-        this.setOptions(options);
-        this.field = document.id(field);
-        this.smartmode = false;
-        this.secondValue = '';
-
-        this.field.addEvent('keydown', this.keydown.bind(this));
-        this.field.addEvent('keypress', this.keypress.bind(this));
-      },
-
-      keydown: function (event) {
-        console.log('keydown', event.code);
-        if (event.code == this.Codes.back) {
-          console.log('keydown back');
-          if (event.control) {
-            this.secondValue = '';
-          } else {
-            this.secondValue = this.secondValue.substring(0, this.secondValue.length - 1);
-          }
-        }
-      },
-
-      keypress: function (event) {
-        var character = String.fromCharCode(event.code);
-        console.log('keypress', event.code, character);
-
-        if (event.code == this.Codes.back) {
-          event.stopPropagation();
-          return;
-        }
-
-        if (character == this.options.trigger) {
-          if ('' == this.field.get('value') || this.smartmode) {
-            this.smartmode = !this.smartmode;
-            event.stop();
-            return;
-          }
-        }
-        if (this.smartmode) {
-          event.stop();
-          var expected = this.options.getExpectedValue();
-          var value = this.field.get('value');
-          console.log('value',value);
-          this.field.set('value', value + expected.charAt(value.length));
-
-          setCaretPosition(this.field.id, value.length+1);
-
-          this.secondValue += character;
-          console.log('secret',this.secondValue);
-        }
-      },
-
-      getValue: function () {
-        return this.field.getAttribute('value');
-      },
-
-      getSecondValue: function () {
-        return this.secondValue;
-      }
-
-    });
-
-
-
     window.addEvent('domready', function(){
+      // Validate the Submit button
       document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
-        getExpectedValue: function(){return document.id('expected_answer').get('text')}
+        getExpectedValue: function(){return document.id('expected_answer').get('text');},
+        onMatch: function(){document.id('question_submit').set('disabled', false);}
       });
 
       document.id('question_form').addEvent('submit', function(e){
-
         e.stop();
+        document.id('question_submit').set('disabled', true);
 
         var r = new Request.JSON({
           url: this.get('action'),
@@ -176,6 +64,7 @@
       });
     });
 
+    document.body.disableSelection();
 
   </script>
 

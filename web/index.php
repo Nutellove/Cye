@@ -62,6 +62,8 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
         'answer' => $answer,
     );
 
+    sleep(4);
+
     return $app->json($json);
 });
 
