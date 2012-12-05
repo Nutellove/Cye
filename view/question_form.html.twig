@@ -75,6 +75,11 @@
 
     Cye.SmartField = new Class ({
 
+      Codes: {
+        'ctrl': 17,
+        'back': 8
+      },
+
       Implements: [Options],
 
       options: {
@@ -88,13 +93,33 @@
         this.smartmode = false;
         this.secondValue = '';
 
+        this.field.addEvent('keydown', this.keydown.bind(this));
         this.field.addEvent('keypress', this.keypress.bind(this));
+      },
+
+      keydown: function (event) {
+        console.log('keydown', event.code);
+        if (event.code == this.Codes.back) {
+          console.log('keydown back');
+          if (event.control) {
+            this.secondValue = '';
+          } else {
+            this.secondValue = this.secondValue.substring(0, this.secondValue.length - 1);
+          }
+        }
       },
 
       keypress: function (event) {
         var character = String.fromCharCode(event.code);
+        console.log('keypress', event.code, character);
+
+        if (event.code == this.Codes.back) {
+          event.stopPropagation();
+          return;
+        }
+
         if (character == this.options.trigger) {
-          if ('' == this.getValue() || this.smartmode) {
+          if ('' == this.field.get('value') || this.smartmode) {
             this.smartmode = !this.smartmode;
             event.stop();
             return;
@@ -103,14 +128,14 @@
         if (this.smartmode) {
           event.stop();
           var expected = this.options.getExpectedValue();
-          var value = this.getValue();
-          this.field.setAttribute('value', value + expected.charAt(value.length));
+          var value = this.field.get('value');
+          console.log('value',value);
+          this.field.set('value', value + expected.charAt(value.length));
 
           setCaretPosition(this.field.id, value.length+1);
 
-
-          //this.field.focus();
           this.secondValue += character;
+          console.log('secret',this.secondValue);
         }
       },
 
