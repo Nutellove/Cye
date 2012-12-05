@@ -60,13 +60,6 @@ class FeatureContext extends MinkContext
 
 
 
-    /**
-     * @Given /^I submit$/
-     */
-    public function iSubmit()
-    {
-        throw new PendingException();
-    }
 
     /**
      * @Given /^I wait for (\d+) seconds?$/

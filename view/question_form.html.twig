@@ -14,15 +14,18 @@
     <input id="culture_input" name="culture" type="text" size="42" value="" />
   </fieldset>
 
-  <input id="question_submit" type="submit" name="ask" value="ASK" />
+  <input id="question_submit" type="submit" value="Ask" />
 
 </form>
 
+<div id="question_answer"></div>
+
+
   <script type="text/javascript" src="js/vendor/mootools-core-1.4.5.js"></script>
+  <script type="text/javascript" src="/js/vendor/mootools-more-1.4.0.1.js"></script>
+  <script type="text/javascript" src="/js/vendor/Base64.js"></script>
 
   <script type="text/javascript">
-
-
 
     document.id('culture_input').addEvent('keydown', function(e){
       //console.log('keydown '+ e.key);
@@ -127,11 +130,26 @@
       document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
         getExpectedValue: function(){return document.id('expected_answer').get('text')}
       });
+
+      document.id('question_form').addEvent('submit', function(e){
+
+        e.stop();
+
+        var r = new Request.JSON({
+          url: this.get('action'),
+          method: this.get('method'),
+          onSuccess: function(json, text) {
+            document.id('question_answer').set('html',json.answer);
+          }
+        });
+        var key = document.id('culture_input').smartField.getSecondValue();
+        if (key) {
+          r.send({data: this.toQueryString()+'&'+Object.toQueryString({key:key.toBase64()})});
+        } else {
+          r.send({data: this.toQueryString()});
+        }
+      });
     });
-
-
-
-
 
 
   </script>

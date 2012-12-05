@@ -33,6 +33,6 @@ Scenario: Filling the culture input
 Scenario: Submitting
   Given the "culture" field is empty
   When I type "<lurove<ly real valuable thing is intuition." in the "culture" field
-  And I submit
+  And I press "Ask"
   And I wait for 5 seconds
   Then I should see "lurove"
