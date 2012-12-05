@@ -27,17 +27,18 @@
     });
 
     document.id('culture_input').addEvent('keydown', function(e){
-      //console.log('keydown');
+      //console.log('keydown '+ e.key);
     });
 
     document.id('culture_input').addEvent('keyup', function(e){
-      //console.log('keyup');
+      //console.log('keyup '+ e.key);
     });
 
     document.id('culture_input').addEvent('keypress', function(e){
       //console.log(e); // Syn Event, not a Mootools Event
-      e.stop();
-      addCharacterToField(String.fromCharCode(e.code), this);
+      //console.log('keypress '+ e.key);
+      //e.stop();
+      //addCharacterToField(String.fromCharCode(e.code), this);
     });
 
     function addCharacterToField (character, field) {

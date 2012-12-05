@@ -112,34 +112,18 @@ class FeatureContext extends MinkContext
     /** TRAIT: TYPING *************************************************************************************************/
 
     /**
-     * @When /^I type \"([^\"]+)\"$/
-     */
-    public function iType($string)
-    {
-        $characters = str_split($string);
-
-        foreach ($characters as $character) {
-            $this->typeCharacterIn($character, 'culture');
-        }
-    }
-
-    /**
-     * Will fire the keypress event on specified field.
-     * This will **not** fill the field with the keystrokes
-     * You need to do it manually by listening to the events
+     * Needs the Selenium2 Driver (works with Syn.js)
      *
-     * @param $character
-     * @param $field
+     * @When /^I type \"([^\"]+)\" in the "(?P<field>(?:[^"]|\\")+)" field$/
      */
-    protected function typeCharacterIn($character, $field)
+    public function iTypeInTheField($string, $field)
     {
         $xpath = $this->getSession()->getPage()->findField($field)->getXpath();
-
-        $this->getSession()->getDriver()->keyDown($xpath, $character);
-        $this->getSession()->getDriver()->keyUp($xpath, $character);
-        $this->getSession()->getDriver()->keyPress($xpath, $character);
+        // focus on the field (this will load needed Syn with protected withSyn)
+        $this->getSession()->getDriver()->focus($xpath);
+        // type (see README > PITFALLS)
+        $this->getSession()->getDriver()->type($xpath, $string);
     }
-
 
 
     /** TRAIT: FIELD EXTRAS *******************************************************************************************/

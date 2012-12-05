@@ -28,12 +28,12 @@ Background:
 Scenario: Filling the culture input
   Given the "culture" field is empty
   And I focus on the "culture" field
-  When I type "<lurove<ly real valuable thing is intuition."
+  When I type "<lurove<ly real valuable thing is intuition." in the "culture" field
   Then the "culture" field should contain "The only real valuable thing is intuition."
 
 Scenario: Submitting
   Given the "culture" field is empty
-  When I type "<lurove<ly real valuable thing is intuition."
+  When I type "<lurove<ly real valuable thing is intuition." in the "culture" field
   And I submit
   And I wait for 5 seconds
   Then I should see "lurove"
