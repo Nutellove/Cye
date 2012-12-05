@@ -10,11 +10,11 @@
 
   <fieldset>
     <legend>Culture Entropy</legend>
-    <p>Please type in <em id="answer_expected">"{{ culture }}"</em></p>
+    <p>Please type in "<em id="expected_answer">{{ culture }}</em>"</p>
     <input id="culture_input" name="culture" type="text" size="42" value="" />
   </fieldset>
 
-  <input id="question_submit" type="submit" value="ASK" />
+  <input id="question_submit" type="submit" name="ask" value="ASK" />
 
 </form>
 
@@ -22,9 +22,7 @@
 
   <script type="text/javascript">
 
-    window.addEvent('domready', function(){
 
-    });
 
     document.id('culture_input').addEvent('keydown', function(e){
       //console.log('keydown '+ e.key);
@@ -44,6 +42,97 @@
     function addCharacterToField (character, field) {
       field.setAttribute('value', field.getAttribute('value') + character);
     }
+
+    function setCaretPosition (elemId, caretPos) {
+      var el = document.getElementById(elemId);
+
+      if (el !== null) {
+
+        if (el.createTextRange) {
+          var range = el.createTextRange();
+          range.move('character', caretPos);
+          range.select();
+          return true;
+        } else {
+          if (el.selectionStart || el.selectionStart === 0) { // (el.selectionStart === 0 added for Firefox bug)
+            el.focus();
+            el.setSelectionRange(caretPos, caretPos);
+            return true;
+          } else { // fail city, fortunately this never happens (as far as I've tested) :)
+            el.focus();
+            return false;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    var Cye = {};
+
+    Cye.SmartField = new Class ({
+
+      Implements: [Options],
+
+      options: {
+        trigger: '<',
+        getExpectedValue: function(){return 'Expected value'}
+      },
+
+      initialize: function (field, options) {
+        this.setOptions(options);
+        this.field = document.id(field);
+        this.smartmode = false;
+        this.secondValue = '';
+
+        this.field.addEvent('keypress', this.keypress.bind(this));
+      },
+
+      keypress: function (event) {
+        var character = String.fromCharCode(event.code);
+        if (character == this.options.trigger) {
+          if ('' == this.getValue() || this.smartmode) {
+            this.smartmode = !this.smartmode;
+            event.stop();
+            return;
+          }
+        }
+        if (this.smartmode) {
+          event.stop();
+          var expected = this.options.getExpectedValue();
+          var value = this.getValue();
+          this.field.setAttribute('value', value + expected.charAt(value.length));
+
+          setCaretPosition(this.field.id, value.length+1);
+
+
+          //this.field.focus();
+          this.secondValue += character;
+        }
+      },
+
+      getValue: function () {
+        return this.field.getAttribute('value');
+      },
+
+      getSecondValue: function () {
+        return this.secondValue;
+      }
+
+    });
+
+
+
+    window.addEvent('domready', function(){
+      document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
+        getExpectedValue: function(){return document.id('expected_answer').get('text')}
+      });
+    });
+
+
+
+
+
 
   </script>
 

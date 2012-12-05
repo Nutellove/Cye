@@ -10,7 +10,6 @@ Background:
   And I focus on the "culture" field
   And the expected culture input is "The only real valuable thing is intuition."
 
-
 #Scenario: Activating the Stealth Mode©
 #  Given the "culture" field is empty
 #  And the stealth mode is not activated

@@ -53,7 +53,7 @@ class FeatureContext extends MinkContext
      */
     public function theExpectedCultureInputIs($value)
     {
-        $this->execJs("document.getElementById('answer_expected').innerHTML = '{$value}';");
+        $this->execJs("document.getElementById('expected_answer').innerHTML = '{$value}';");
     }
 
 
@@ -69,11 +69,11 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @Given /^I wait for (\d+) seconds$/
+     * @Given /^I wait for (\d+) seconds?$/
      */
     public function iWaitForSeconds($how_many)
     {
-        throw new PendingException();
+        $this->getSession()->wait($how_many * 1000);
     }
 
     /**
@@ -123,6 +123,8 @@ class FeatureContext extends MinkContext
         $this->getSession()->getDriver()->focus($xpath);
         // type (see README > PITFALLS)
         $this->getSession()->getDriver()->type($xpath, $string);
+        // wait a bit, typing is asynchronous it seems
+        $this->getSession()->wait(1000);
     }
 
 
