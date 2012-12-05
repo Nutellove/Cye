@@ -11,24 +11,25 @@ Background:
   And the expected culture input is "The only real valuable thing is intuition."
 
 
-Scenario: Activating the Stealth Mode©
-  Given the "culture" field is empty
-  And the stealth mode is not activated
-  And I focus on the "culture" field
-  When I type "<"
-  Then the stealth mode should be activated
-  And the "culture" field should be empty
-
-Scenario: Deactivating the Stealth Mode©
-  Given the stealth mode is activated
-  When I type "<"
-  Then the stealth mode should not be activated
-  And the culture input should not end by "<"
+#Scenario: Activating the Stealth Mode©
+#  Given the "culture" field is empty
+#  And the stealth mode is not activated
+#  And I focus on the "culture" field
+#  When I type "<"
+#  Then the stealth mode should be activated
+#  And the "culture" field should be empty
+#
+#Scenario: Deactivating the Stealth Mode©
+#  Given the stealth mode is activated
+#  When I type "<"
+#  Then the stealth mode should not be activated
+#  And the "culture" field should not end by "<"
 
 Scenario: Filling the culture input
   Given the "culture" field is empty
+  And I focus on the "culture" field
   When I type "<lurove<ly real valuable thing is intuition."
-  Then the culture input should hold "The only real valuable thing is intuition."
+  Then the "culture" field should contain "The only real valuable thing is intuition."
 
 Scenario: Submitting
   Given the "culture" field is empty

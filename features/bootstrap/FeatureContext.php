@@ -56,46 +56,9 @@ class FeatureContext extends MinkContext
         $this->execJs("document.getElementById('answer_expected').innerHTML = '{$value}';");
     }
 
-    /**
-     * @Given /^the "(?P<field>(?:[^"]|\\")*)" field is empty$/
-     */
-    public function theFieldIsEmpty($field)
-    {
-        $this->execJs("document.getElementById('{$field}_input').value = '';");
-    }
 
-    /**
-     * @Then /^the "(?P<field>(?:[^"]|\\")*)" field should be empty$/
-     */
-    public function theFieldShouldBeEmpty($name)
-    {
-        $emptiness = $this->evalJs("document.getElementById('{$field}_input').value == '';");
-        assertTrue($emptiness);
-    }
 
-    /**
-     * @Then /^the (.+) input should not end by \"([^\"]*)\"$/
-     */
-    public function theInputShouldNotEndBy($name, $suffix)
-    {
-        throw new PendingException();
-    }
 
-    /**
-     * @Then /^the (.+) input should hold \"([^\"]*)\"$/
-     */
-    public function theInputShouldHold($name, $value)
-    {
-        throw new PendingException(); // use parent
-    }
-
-    /**
-     * @When /^I type \"([^\"]*)\"$/
-     */
-    public function iType($string)
-    {
-        throw new PendingException();
-    }
 
     /**
      * @Given /^I submit$/
@@ -143,6 +106,79 @@ class FeatureContext extends MinkContext
     public function theStealthModeShouldNotBeActivated()
     {
         throw new PendingException();
+    }
+
+
+    /** TRAIT: TYPING *************************************************************************************************/
+
+    /**
+     * @When /^I type \"([^\"]+)\"$/
+     */
+    public function iType($string)
+    {
+        $characters = str_split($string);
+
+        foreach ($characters as $character) {
+            $this->typeCharacterIn($character, 'culture');
+        }
+    }
+
+    /**
+     * Will fire the keypress event on specified field.
+     * This will **not** fill the field with the keystrokes
+     * You need to do it manually by listening to the events
+     *
+     * @param $character
+     * @param $field
+     */
+    protected function typeCharacterIn($character, $field)
+    {
+        $xpath = $this->getSession()->getPage()->findField($field)->getXpath();
+
+        $this->getSession()->getDriver()->keyDown($xpath, $character);
+        $this->getSession()->getDriver()->keyUp($xpath, $character);
+        $this->getSession()->getDriver()->keyPress($xpath, $character);
+    }
+
+
+
+    /** TRAIT: FIELD EXTRAS *******************************************************************************************/
+
+    /**
+     * @Given /^the "(?P<field>(?:[^"]|\\")*)" field is empty$/
+     */
+    public function theFieldIsEmpty($field)
+    {
+        $node = $this->assertSession()->fieldExists($field);
+        $node->setValue('');
+    }
+
+    /**
+     * @Then /^the "(?P<field>(?:[^"]|\\")*)" field should be empty$/
+     */
+    public function theFieldShouldBeEmpty($field)
+    {
+        $this->assertFieldContains($field, '');
+    }
+
+    /**
+     * @Then /^the "(?P<field>(?:[^"]|\\")*)" field should end by \"(?P<suffix>[^\"]*)\"$/
+     */
+    public function theFieldShouldEndBy($field, $suffix)
+    {
+        $node = $this->assertSession()->fieldExists($field);
+        $actual = substr($node->getValue(), 0, -1 * strlen($suffix));
+        assertEquals($suffix, $actual);
+    }
+
+    /**
+     * @Then /^the "(?P<field>(?:[^"]|\\")*)" field should not end by \"(?P<suffix>[^\"]*)\"$/
+     */
+    public function theFieldShouldNotEndBy($field, $suffix)
+    {
+        $node = $this->assertSession()->fieldExists($field);
+        $actual = substr($node->getValue(), 0, -1 * strlen($suffix));
+        assertNotEquals($suffix, $actual);
     }
 
 }

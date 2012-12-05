@@ -17,4 +17,33 @@
   <input id="question_submit" type="submit" value="ASK" />
 
 </form>
+
+  <script type="text/javascript" src="js/vendor/mootools-core-1.4.5.js"></script>
+
+  <script type="text/javascript">
+
+    window.addEvent('domready', function(){
+
+    });
+
+    document.id('culture_input').addEvent('keydown', function(e){
+      //console.log('keydown');
+    });
+
+    document.id('culture_input').addEvent('keyup', function(e){
+      //console.log('keyup');
+    });
+
+    document.id('culture_input').addEvent('keypress', function(e){
+      //console.log(e); // Syn Event, not a Mootools Event
+      e.stop();
+      addCharacterToField(String.fromCharCode(e.code), this);
+    });
+
+    function addCharacterToField (character, field) {
+      field.setAttribute('value', field.getAttribute('value') + character);
+    }
+
+  </script>
+
 {% endblock %}

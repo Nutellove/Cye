@@ -2,5 +2,8 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             base_url: http://cye.local
+            #show_cmd: 'firefox -jsconsole %s'
             goutte: ~
             selenium2: ~
+#                capabilities: { "browser": "google-chrome", "version": "23"}
+#                browser: chrome
