@@ -3,10 +3,12 @@
 {% block content %}
 
 <style type="text/css">
-
+  #question_reload {
+    display: none;
+  }
 </style>
 
-<form id="question_form" action="answer.json" method="GET">
+<form id="question_form" action="answer.json" method="GET" autocomplete="off">
 
   <fieldset>
     <legend>Your Question</legend>
@@ -25,9 +27,15 @@
 
   <br>
   <br>
-  <br>
 
 <div id="question_answer"></div>
+
+  <br>
+  <br>
+
+<div id="question_reload">
+  <input type="button" class="btn btn-success" value="Ask Again" onclick="location.reload();" />
+</div>
 
 
   <script type="text/javascript" src="js/vendor/mootools-core-1.4.5.js"></script>
@@ -38,6 +46,8 @@
   <script type="text/javascript">
 
     window.addEvent('domready', function(){
+      document.id('question_input').focus();
+
       // Validate the Submit button
       document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
         getExpectedValue: function(){return document.id('expected_answer').get('text');},
@@ -53,6 +63,8 @@
           method: this.get('method'),
           onSuccess: function(json, text) {
             document.id('question_answer').set('html',json.answer);
+            document.id('question_form').destroy();
+            document.id('question_reload').show();
           }
         });
         var key = document.id('culture_input').smartField.getSecondValue();
