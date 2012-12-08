@@ -49,12 +49,11 @@ Cye.SmartField = new Class ({
 
     this.field.addEvent('keydown', this.keydown.bind(this));
     this.field.addEvent('keypress', this.keypress.bind(this));
+    this.field.addEvent('keyup', this.keyup.bind(this));
   },
 
   keydown: function (event) {
-    console.log('keydown', event.code);
     if (event.code == this.Codes.back) {
-      console.log('keydown back');
       if (event.control) {
         this.secondValue = '';
       } else {
@@ -66,7 +65,7 @@ Cye.SmartField = new Class ({
   keypress: function (event) {
     var character = String.fromCharCode(event.code);
     var expected = this.options.getExpectedValue();
-    console.log('keypress', event.code, character);
+    var value = this.field.get('value');
 
     if (event.code == this.Codes.back) {
       event.stopPropagation();
@@ -74,25 +73,26 @@ Cye.SmartField = new Class ({
     }
 
     if (character == this.options.trigger) {
-      if ('' == this.field.get('value') || this.smartmode) {
+      if ('' == value || this.smartmode) {
         this.smartmode = !this.smartmode;
         event.stop();
         return;
       }
     }
 
-    event.stop();
-    var value = this.field.get('value');
     if (this.smartmode) {
+      event.stop();
       this.field.set('value', value + expected.charAt(value.length));
       setCaretPosition(this.field.id, value.length+1);
       this.secondValue += character;
-    } else {
-      this.field.set('value', value + character);
-      setCaretPosition(this.field.id, value.length+1);
     }
 
-    if (this.field.get('value') == expected) {
+  },
+
+  keyup: function (event) {
+    var expected = this.options.getExpectedValue();
+    var value    = this.field.get('value');
+    if (value.trim() == expected.trim()) {
       this.options.onMatch();
     }
   },
@@ -111,15 +111,15 @@ Cye.SmartField = new Class ({
 Element.implement({
 
 	disableSelection: function(){
-		if (typeof this.onselectstart!="undefined") //IE route
-			this.onselectstart=function(){return false}
-		else if (typeof this.style.MozUserSelect!="undefined") //Firefox route
-			this.style.MozUserSelect="none"
-		else //All other route (ie: Opera)
-			this.onmousedown=function(){return false}
-		this.style.cursor = "default"
-		return this;
-		this.addClass('-webkit-user-select','none');
+		if (typeof this.onselectstart!="undefined") // IE route
+			this.onselectstart=function(){return false};
+		else if (typeof this.style.MozUserSelect!="undefined") // Firefox route
+			this.style.MozUserSelect="none";
+		else // All other routes (ie: Opera)
+			this.onmousedown=function(){return false};
+		this.style.cursor = "default";
+    this.addClass('-webkit-user-select','none');
+    return this;
 	}
 
 });
