@@ -14,6 +14,7 @@ Experimenting BDD with various js libs :
 
 `view/` contains the twig templates
 
+
 ## INSTALL
 
 Get composer, install, and make sure the `cache/` folder is writeable.
@@ -26,13 +27,18 @@ Get composer, install, and make sure the `cache/` folder is writeable.
 
 See PITFALLS below
 
+
 ## TEST
 
 Create your `http://cye.local` that points to `web`, or change the `base_url` in `behat.yml`.
 
 Follow [Selenium setup](http://docs.behat.org/cookbook/behat_and_mink.html#test-in-browser-selenium2-session).
 
-Then, simply run
+Start the selenium server :
+
+    java -jar selenium.jar
+
+Then, simply run :
 
     bin/behat
 
