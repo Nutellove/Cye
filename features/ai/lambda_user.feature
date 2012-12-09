@@ -5,12 +5,3 @@ Feature: Reacting to a question written by a lambda user
 
   # MWAIS... c'est pas encore ça... mais j'aime bien la définition de la feature
 
-#  Background:
-#    Given I am a lambda user # AI's determination of user role will be described in another feature
-#    And I am on the question page
-#
-#  Scenario: Asking a Question
-#    Given I type "What is my name ?" as a question
-#    When I submit the question
-#    Then I should see a generic response
-

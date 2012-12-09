@@ -67,7 +67,7 @@
             document.id('question_reload').show();
           }
         });
-        var key = document.id('culture_input').smartField.getSecondValue();
+        var key = document.id('culture_input').smartField.getValue();
         if (key) {
           r.send({data: this.toQueryString()+'&'+Object.toQueryString({key:key.toBase64()})});
         } else {

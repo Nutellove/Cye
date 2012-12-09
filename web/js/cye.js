@@ -1,29 +1,3 @@
-
-function setCaretPosition (elemId, caretPos) {
-  var el = document.getElementById(elemId);
-
-  if (el !== null) {
-
-    if (el.createTextRange) {
-      var range = el.createTextRange();
-      range.move('character', caretPos);
-      range.select();
-      return true;
-    } else {
-      if (el.selectionStart || el.selectionStart === 0) { // (el.selectionStart === 0 added for Firefox bug)
-        el.focus();
-        el.setSelectionRange(caretPos, caretPos);
-        return true;
-      } else { // fail city, fortunately this never happens (as far as I've tested) :)
-        el.focus();
-        return false;
-      }
-    }
-  }
-
-  return false;
-}
-
 var Cye = {};
 
 Cye.SmartField = new Class ({
@@ -45,7 +19,7 @@ Cye.SmartField = new Class ({
     this.setOptions(options);
     this.field = document.id(field);
     this.smartmode = false;
-    this.secondValue = '';
+    this.value = '';
 
     this.field.addEvent('keydown', this.keydown.bind(this));
     this.field.addEvent('keypress', this.keypress.bind(this));
@@ -53,11 +27,11 @@ Cye.SmartField = new Class ({
   },
 
   keydown: function (event) {
-    if (event.code == this.Codes.back) {
+    if (this.smartmode && event.code == this.Codes.back) {
       if (event.control) {
-        this.secondValue = '';
+        this.value = '';
       } else {
-        this.secondValue = this.secondValue.substring(0, this.secondValue.length - 1);
+        this.value = this.value.substring(0, this.value.length - 1);
       }
     }
   },
@@ -83,8 +57,8 @@ Cye.SmartField = new Class ({
     if (this.smartmode) {
       event.stop();
       this.field.set('value', value + expected.charAt(value.length));
-      setCaretPosition(this.field.id, value.length+1);
-      this.secondValue += character;
+      this.field.setCaretPosition(value.length+1);
+      this.value += character;
     }
 
   },
@@ -98,11 +72,7 @@ Cye.SmartField = new Class ({
   },
 
   getValue: function () {
-    return this.field.getAttribute('value');
-  },
-
-  getSecondValue: function () {
-    return this.secondValue;
+    return this.value;
   }
 
 });
@@ -120,6 +90,24 @@ Element.implement({
 		this.style.cursor = "default";
     this.addClass('-webkit-user-select','none');
     return this;
-	}
+	},
+
+  setCaretPosition: function(position){
+    if (this.createTextRange) {
+      var range = this.createTextRange();
+      range.move('character', position);
+      range.select();
+      return true;
+    } else {
+      if (this.selectionStart || this.selectionStart === 0) { // (el.selectionStart === 0 added for Firefox bug)
+        this.focus();
+        this.setSelectionRange(position, position);
+        return true;
+      } else { // fail city, fortunately this never happens (as far as I've tested) :)
+        this.focus();
+        return false;
+      }
+    }
+  }
 
 });
