@@ -56,11 +56,6 @@ class FeatureContext extends MinkContext
         $this->execJs("document.getElementById('expected_answer').innerHTML = '{$value}';");
     }
 
-
-
-
-
-
     /**
      * @Given /^I wait for (\d+) seconds?$/
      */
@@ -68,6 +63,10 @@ class FeatureContext extends MinkContext
     {
         $this->getSession()->wait($how_many * 1000);
     }
+
+
+
+
 
     /**
      * @Given /^the stealth mode is not activated$/
