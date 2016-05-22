@@ -4,11 +4,15 @@
         ,"symfony/finder":              "~2.1"
         ,"michelf/php-markdown":        "~1.6"
         ,"twig/twig":                   "~1"
-        ,"behat/behat":                 "~2.4"
-        ,"behat/mink":                  "~1.7"
-        ,"behat/mink-extension":        "~1.3"
-        ,"behat/mink-goutte-driver":    "~1.2"
-        ,"behat/mink-selenium2-driver": "~1.3"
+    },
+
+    "require-dev": {
+         "phpunit/phpunit":             "~3"
+        ,"behat/behat":                 "~3"
+        ,"behat/mink":                  "~1"
+        ,"behat/mink-extension":        "~2"
+        ,"behat/mink-goutte-driver":    "~1"
+        ,"behat/mink-selenium2-driver": "~1"
     },
 
     "config": {
