@@ -1,8 +1,10 @@
-# Goutte
+# Dolphin
 .directory
+
+# Jetbrains
 .idea/*
 
-# Muss
+# Apple
 .DS_Store
 
 # Bootstrap
@@ -16,6 +18,3 @@ vendor/*
 web/uploads/*
 web/bundles/*
 
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml

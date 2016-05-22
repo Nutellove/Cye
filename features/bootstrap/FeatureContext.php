@@ -1,17 +1,12 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
 
-// Require 3rd-party libraries here:
+// MinkContext has no `assertEquals` method. This feels wrong. 
 require_once 'PHPUnit/Autoload.php';
 require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+
 
 /**
  * Features context.
@@ -20,11 +15,9 @@ class FeatureContext extends MinkContext
 {
     /**
      * Initializes context.
-     * Every scenario gets it's own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * Every scenario gets its own context object.
      */
-    public function __construct(array $parameters)
+    public function __construct()
     {
         // Initialize your context here
     }
@@ -39,6 +32,8 @@ class FeatureContext extends MinkContext
         return $this->getSession()->evaluateScript($script);
     }
 
+    
+    // STEPS ///////////////////////////////////////////////////////////////////
 
     /**
      * @Given /^I focus on the "(?P<field>(?:[^"]|\\")*)" field$/
@@ -64,44 +59,8 @@ class FeatureContext extends MinkContext
         $this->getSession()->wait($how_many * 1000);
     }
 
-
-
-
-
-    /**
-     * @Given /^the stealth mode is not activated$/
-     */
-    public function theStealthModeIsNotActivated()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^the stealth mode is activated$/
-     */
-    public function theStealthModeIsActivated()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^the stealth mode should be activated$/
-     */
-    public function theStealthModeShouldBeActivated()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^the stealth mode should not be activated$/
-     */
-    public function theStealthModeShouldNotBeActivated()
-    {
-        throw new PendingException();
-    }
-
-
-    /** TRAIT: TYPING *************************************************************************************************/
+    
+    // TRAIT: TYPING ///////////////////////////////////////////////////////////
 
     /**
      * Needs the Selenium2 Driver (works with Syn.js)
@@ -120,7 +79,7 @@ class FeatureContext extends MinkContext
     }
 
 
-    /** TRAIT: FIELD EXTRAS *******************************************************************************************/
+    // TRAIT: FIELD EXTRAS /////////////////////////////////////////////////////
 
     /**
      * @Given /^the "(?P<field>(?:[^"]|\\")*)" field is empty$/
@@ -157,6 +116,41 @@ class FeatureContext extends MinkContext
         $node = $this->assertSession()->fieldExists($field);
         $actual = substr($node->getValue(), 0, -1 * strlen($suffix));
         assertNotEquals($suffix, $actual);
+    }
+
+
+    // UNUSED //////////////////////////////////////////////////////////////////
+
+    /**
+     * @Given /^the stealth mode is not activated$/
+     */
+    public function theStealthModeIsNotActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given /^the stealth mode is activated$/
+     */
+    public function theStealthModeIsActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the stealth mode should be activated$/
+     */
+    public function theStealthModeShouldBeActivated()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^the stealth mode should not be activated$/
+     */
+    public function theStealthModeShouldNotBeActivated()
+    {
+        throw new PendingException();
     }
 
 }

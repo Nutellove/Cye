@@ -17,13 +17,10 @@ There are no unit-tests. We don't need them in this project.
 
 ## INSTALL
 
-Get composer, install, and make sure the `cache/` folder is writable.
+Get composer, install :
 
     curl -s https://getcomposer.org/installer | php
     php composer.phar install
-
-    sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx cache
-    sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx cache
 
 Also see PITFALLS below.
 
@@ -31,24 +28,32 @@ We're still using the awful `composer.json` instead of `composer.yml`.
 Gotta make or find a small script someday that wraps composer...
 
 
-
-
 ## TEST
 
-Create your `http://cye.local` that points to `web`, or change the `base_url` in `behat.yml`.
+You'll need [selenium](http://docs.seleniumhq.org/download/).
 
-Follow [Selenium setup](http://docs.behat.org/cookbook/behat_and_mink.html#test-in-browser-selenium2-session).
+Start the php built-in web server :
 
-Start the selenium server :
+    php -S localhost:7878 -t web web/route.php
+    
+We use `route.php` to simulate the `mod_rewrite` Apache directive in
+`.htaccess`. You can skip the built-in web server if you use Apache,
+but remember to change the `base_url` directive in `behat.yml`.
+
+Optionally, you can follow [Selenium setup](http://docs.behat.org/cookbook/behat_and_mink.html#test-in-browser-selenium2-session).
+
+Start the selenium server in another console :
 
     java -jar selenium.jar
 
-Then, simply run :
+Then, simply run in yet another console :
 
     bin/behat
 
 
 ## PITFALLS
+
+### Typing
 
 Monkey added to `vendor/behat/mink-selenium2-driver/src/Behat/Mink/Driver/Selenium2Driver.php` :
 
@@ -65,5 +70,15 @@ Monkey added to `vendor/behat/mink-selenium2-driver/src/Behat/Mink/Driver/Seleni
         $this->withSyn()->executeJsOnXpath($xpath, $script);
     }
 
-FIXME : extending `Selenium2Driver` is straightforward,
+Extending `Selenium2Driver` is straightforward,
 but making `Mink` use my custom driver... o.O
+
+Years later, there's still no `type()` method in the driver.
+
+
+### Cache
+
+Finally, make sure the `cache/` folder is writable.
+
+    sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx cache
+    sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx cache

@@ -1,13 +1,11 @@
 <?php
 
-define('CYE_ROOT_PATH', __DIR__ . '/../');
+define('CYE_ROOT_PATH', dirname(__DIR__).'/');
 
 $loader = require_once CYE_ROOT_PATH . 'vendor/autoload.php';
 //$loader->add('Goutte\Story', __DIR__.'/src');
 
 use Silex\Application;
-use Symfony\Component\Finder\Finder;
-use dflydev\markdown\MarkdownParser;
 
 // Utils (some monkey coding)
 
@@ -20,13 +18,13 @@ function random_culture_line ($lang='en') {
     return trim($f[array_rand($f)]);
 }
 
-// App
+// App /////////////////////////////////////////////////////////////////////////
 
 $app = new Application();
 $app['debug'] = is_localhost();
 
 
-// Twig
+// Twig ////////////////////////////////////////////////////////////////////////
 
 $twig_loader = new Twig_Loader_Filesystem(array(
     CYE_ROOT_PATH . 'view',
@@ -37,7 +35,7 @@ $twig = new Twig_Environment($twig_loader, array(
 ));
 
 
-// Route Aliases
+// Route Aliases ///////////////////////////////////////////////////////////////
 
 $app->get('/', function(Application $app) use ($twig) {
     $page = $twig->render('question_form.html.twig', array(
@@ -66,6 +64,8 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
 
     return $app->json($json);
 });
+
+
 
 
 

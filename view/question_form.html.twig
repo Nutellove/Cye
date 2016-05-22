@@ -6,22 +6,28 @@
   #question_reload {
     display: none;
   }
+  #nojavascript {
+    color: darkred;
+  }
 </style>
 
 <form id="question_form" action="answer.json" method="GET" autocomplete="off">
 
   <fieldset>
     <legend>Your Question</legend>
-    <input id="question_input" name="question" type="text" size="42" value="" />
+    <input id="question_input" name="question" type="text" size="50" value="" />
   </fieldset>
 
   <fieldset>
     <legend>Culture Entropy</legend>
     <p>Please type in "<em id="expected_answer">{{ culture }}</em>"</p>
-    <input id="culture_input" name="culture" type="text" size="42" value="" />
+    <input id="culture_input" name="culture" type="text" size="50" value="" />
   </fieldset>
 
+  <br>
+
   <input id="question_submit" class="btn btn-primary" type="submit" value="Ask" disabled="true" />
+  <span id="nojavascript">I need javascript to be enabled, you cheapskate !</span>
 
 </form>
 
@@ -39,14 +45,15 @@
 
 
   <script type="text/javascript" src="js/vendor/mootools-core-1.4.5.js"></script>
-  <script type="text/javascript" src="/js/vendor/mootools-more-1.4.0.1.js"></script>
-  <script type="text/javascript" src="/js/vendor/Base64.js"></script>
-  <script type="text/javascript" src="/js/cye.js"></script>
+  <script type="text/javascript" src="js/vendor/mootools-more-1.4.0.1.js"></script>
+  <script type="text/javascript" src="js/vendor/Base64.js"></script>
+  <script type="text/javascript" src="js/cye.js"></script>
 
   <script type="text/javascript">
 
     window.addEvent('domready', function(){
       document.id('question_input').focus();
+      document.id('nojavascript').hide();
 
       // Validate the Submit button
       document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
