@@ -27,6 +27,11 @@ Get composer, install, and make sure the `cache/` folder is writable.
 
 Also see PITFALLS below.
 
+We're still using the awful `composer.json` instead of `composer.yml`.
+Gotta make or find a small script someday that wraps composer...
+
+
+
 
 ## TEST
 
