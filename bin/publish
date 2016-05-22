@@ -57,11 +57,8 @@ On_White='\033[47m'       # White
 
 # LOCAL CLEANUP ################################################################
 
-# Clear the local cache, no need to upload it
 echo -e "${Green}Cleaning local files...${Off}"
-app/console cache:clear --env=prod
-app/console cache:clear --env=dev
-app/console cache:clear --env=test
+# Nothing to do here.
 
 
 # UPLOAD #######################################################################
@@ -72,8 +69,30 @@ echo -e "${Green}Uploading files...${Off}"
 rsync -r --delete \
     --exclude .git \
     --exclude .idea \
+    --exclude bin \
     --exclude cache \
     . ${USER}@${SERVER}:${REMOTE_DIR}
+
+
+# REMOTE CLEANUP ###############################################################
+
+# Run some scripts on the server, now
+echo -e "${Green}Preparing remote files...${Off}"
+
+# Commands to run on the remote host
+# Runs the rm (cache cleanup) on the server as www-data !
+# To set it up so that you don't have to type the password every time,
+# run `visudo` as root on the server, add this line :
+# web ALL=(www-data) NOPASSWD: ALL
+
+# The -t -t allow for sudo inside the heredoc, but we need to exit manually.
+
+ssh -t -t ${USER}@${SERVER} <<-ENDSSH
+cd ${REMOTE_DIR}
+chmod -R a+rx vendor
+sudo -u www-data rm -Rf cache/*
+exit
+ENDSSH
 
 
 echo -e "${BGreen}Done !${Off}"
