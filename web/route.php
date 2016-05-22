@@ -2,7 +2,7 @@
 
 // For testing convenience purposes, to be able to run this website with PHP's
 // built-in web server. This imitates the `mod_rewrite` Apache directive.
-// php -S localhost:7878 web/route.php
+// php -S localhost:7878 -t web web/route.php
 
 // Monkey-fix for the vulnerability below.
 if ( ! in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1','::1',))) {
