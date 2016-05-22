@@ -1,23 +1,23 @@
-AI Eye²
-=======
+Cye
+===
 
-Experimenting BDD with various js libs :
-  - webGL
-  - three.js
-  - paper.js
-  - maybe mootools or jquery or klass
+These are the sources of a party computer magic trick, which I wrote to
+experiment Behavior-Driven Development with integration tests written
+in Gherkin.
+
+There are no unit-tests. We don't need them in this project.
 
 
 ## USE
 
-`web/index.php` contains most of the PHP glue
-
-`view/` contains the twig templates
+1. `features/` contains the documentation in the form of scenarios.
+2. `web/index.php` contains most of the PHP glue.
+3. `view/` contains the twig templates.
 
 
 ## INSTALL
 
-Get composer, install, and make sure the `cache/` folder is writeable.
+Get composer, install, and make sure the `cache/` folder is writable.
 
     curl -s https://getcomposer.org/installer | php
     php composer.phar install
@@ -25,7 +25,7 @@ Get composer, install, and make sure the `cache/` folder is writeable.
     sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx cache
     sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx cache
 
-See PITFALLS below
+Also see PITFALLS below.
 
 
 ## TEST
@@ -60,4 +60,5 @@ Monkey added to `vendor/behat/mink-selenium2-driver/src/Behat/Mink/Driver/Seleni
         $this->withSyn()->executeJsOnXpath($xpath, $script);
     }
 
-FIXME : extending Selenium2Driver is easy, but making Mink use my custom driver... o.O
+FIXME : extending `Selenium2Driver` is straightforward,
+but making `Mink` use my custom driver... o.O
