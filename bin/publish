@@ -58,7 +58,7 @@ On_White='\033[47m'       # White
 # LOCAL CLEANUP ################################################################
 
 echo -e "${Green}Cleaning local files...${Off}"
-# Nothing to do here.
+rm -Rf cache/*
 
 
 # UPLOAD #######################################################################
