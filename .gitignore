@@ -10,6 +10,10 @@
 # Bootstrap
 app/bootstrap*
 
+# Binaries symlinks
+bin/behat
+bin/phpunit
+
 # Symfony directories
 cache/*
 vendor/*

@@ -76,7 +76,8 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
 
     $premade = get_premade_answer($answer);
     if (false !== $premade) {
-        $answer = $premade;
+        $md = new \Michelf\MarkdownExtra();
+        $answer = $md->transform($premade);
         $meditation_duration += 4;
     }
 
