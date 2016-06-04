@@ -6,7 +6,7 @@
 
 // Monkey-fix for the vulnerability below.
 if ( ! in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1','::1',))) {
-    exit("What are you doing ? No !");
+    exit("What are you doing ? ... No !");
 }
 
 // Vulnerability here, abuser may check for files' presence on server.

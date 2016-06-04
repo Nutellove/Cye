@@ -1,0 +1,10 @@
+body {
+    padding: 2em;
+}
+
+.warning {
+    color: darkred;
+}
+.btn-primary[disabled] {
+    background-color: #c5c5c5;
+}

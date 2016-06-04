@@ -1,12 +1,26 @@
 <?php
 
-define('CYE_ROOT_PATH', dirname(__DIR__).'/');
+define('CYE_ROOT_PATH', dirname(__DIR__).DIRECTORY_SEPARATOR);
 
 $loader = require_once CYE_ROOT_PATH . 'vendor/autoload.php';
 //$loader->add('Goutte\Story', __DIR__.'/src');
 
 use Silex\Application;
 use Symfony\Component\Finder\Finder;
+
+// Config //////////////////////////////////////////////////////////////////////
+
+$spinners = array( // from web/css/spinners.css
+    'spinner-loader'      , 'throbber-loader', 'refreshing-loader'    ,
+    'heartbeat-loader'    , 'gauge-loader'   , 'three-quarters-loader',
+    'wobblebar-loader'    , 'atebits-loader' , 'whirly-loader'        ,
+    'flower-loader'       , 'dots-loader'    , 'circles-loader'       ,
+    'plus-loader'         , 'ball-loader'    , 'hexdots-loader'       ,
+    'inner-circles-loader', 'pong-loader'    , 'pulse-loader'         ,
+    'square-loader'       , 'bread-loader'   , 'dots3-loader'         ,
+    'squares-loader'      , // <= I made that one myself \o/
+);
+
 
 // Utils (some monkey coding) //////////////////////////////////////////////////
 
@@ -35,6 +49,7 @@ function get_premade_answer ($keyword, $lang='en') {
     return $answer;
 }
 
+
 // App /////////////////////////////////////////////////////////////////////////
 
 $app = new Application();
@@ -54,9 +69,10 @@ $twig = new Twig_Environment($twig_loader, array(
 
 // Route Aliases ///////////////////////////////////////////////////////////////
 
-$app->get('/', function(Application $app) use ($twig) {
+$app->get('/', function(Application $app) use ($twig, $spinners) {
     $page = $twig->render('question_form.html.twig', array(
         'culture' => random_culture_line(),
+        'spinner' => $spinners[array_rand($spinners)],
     ));
     return $page;
 });
@@ -90,9 +106,6 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
 
     return $app->json($json);
 });
-
-
-
 
 
 $app->run();
