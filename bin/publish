@@ -71,7 +71,8 @@ rsync -r --delete \
     --exclude .idea \
     --exclude bin \
     --exclude cache \
-    . ${USER}@${SERVER}:${REMOTE_DIR}
+    . \
+    ${USER}@${SERVER}:${REMOTE_DIR}
 
 
 # REMOTE CLEANUP ###############################################################
