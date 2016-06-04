@@ -94,7 +94,7 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
     if (false !== $premade) {
         $md = new \Michelf\MarkdownExtra();
         $answer = $md->transform($premade);
-        $meditation_duration += 4;
+        $meditation_duration += 8;
     }
 
     $json = array(
@@ -102,7 +102,7 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
         'answer' => $answer,
     );
 
-    sleep($meditation_duration);
+    sleep($meditation_duration); // sweet dreams ar made of this !
 
     return $app->json($json);
 });
