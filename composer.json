@@ -4,6 +4,7 @@
         ,"symfony/finder":              "~2.1"
         ,"michelf/php-markdown":        "~1.6"
         ,"twig/twig":                   "~1"
+        ,"erusev/parsedown":            "~1.7"
     },
 
     "require-dev": {

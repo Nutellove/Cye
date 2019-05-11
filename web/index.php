@@ -37,9 +37,14 @@ function random_culture_line ($lang='en') {
     return trim($f[array_rand($f)]);
 }
 
+function random_refuse_line ($lang='en') {
+    $f = file(get_data_dir($lang) . 'refuse');
+    return trim($f[array_rand($f)]);
+}
+
 function get_premade_answer ($keyword, $lang='en') {
     $answer = false;
-    $files = Finder::create()->files()->name($keyword)->in(get_data_dir($lang));
+    $files = Finder::create()->files()->name($keyword.".md")->in(get_data_dir($lang));
     if ($files->count() > 0) {
         foreach ($files as $file) {
             $answer = file_get_contents($file->getRealpath());
@@ -67,6 +72,13 @@ $twig = new Twig_Environment($twig_loader, array(
 ));
 
 
+// Markdown ////////////////////////////////////////////////////////////////////
+
+$pd = new Parsedown();
+$pd->setUrlsLinked(true);
+$pd->setSafeMode(false);
+
+
 // Route Aliases ///////////////////////////////////////////////////////////////
 
 $app->get('/', function(Application $app) use ($twig, $spinners) {
@@ -77,7 +89,7 @@ $app->get('/', function(Application $app) use ($twig, $spinners) {
     return $page;
 });
 
-$app->get('/answer.json', function(Application $app) use ($twig) {
+$app->get('/answer.json', function(Application $app) use ($twig, $pd) {
     $meditation_duration = 4; // in seconds
 
     $question = !empty($_GET['question']) ? $_GET['question'] : null;
@@ -85,15 +97,14 @@ $app->get('/answer.json', function(Application $app) use ($twig) {
 
     $answer = !empty($_GET['key']) ? $_GET['key'] : null;
     if (empty($answer)) {
-        $answer = "I do not understand, please reformulate your question."; // fixme : L18N
+        $answer = $pd->line(random_refuse_line());
     } else {
         $answer = base64_decode($answer);
     }
 
     $premade = get_premade_answer($answer);
     if (false !== $premade) {
-        $md = new \Michelf\MarkdownExtra();
-        $answer = $md->transform($premade);
+        $answer = $pd->text($premade);
         $meditation_duration += 8;
     }
 
