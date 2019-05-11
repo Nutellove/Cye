@@ -66,12 +66,16 @@
 
 <script type="text/javascript">
 
-  var zoo = '🐅🐆🐘🦏🐂🐃🐄🐎🦌🐐🐏🐑🐖🐗🐪🐫🦍🐉🦖🦕🐈🐀🐁🐇🐒🐕🐩🐨🐿🦔🦇🐍🦅🦉🦆🐓🐔🦃🕊🐣🐤🐥🐦🐧🐋🐳🐬🦈🐟🐠🐡🐙🦑🦐🦀🐚🐌🐢🦎🐊🐀🐃🐅🐇🐉🐍🐎🐐🐒🐓🐕🐖🐭🐹🐰🐶🐺🦊🐵🐸🐯🦁🦓🦒🐴🐮🐷🐻🐼🐲🦄🐱';
-  var maddaddam = function() {
-    var one = String.fromCodePoint((zoo).codePointAt(Math.floor(Math.random() * 92) * 2));
+  var zoo = '🦄🐎🐴🐅🦁🐯🐆🦅🦊🐲🐉🦖🦕🦓🕊🦈🐬🦎🦌🐇🐰🐂🐺🐐🐈🐕🐶🐊🐃🦒🐪🐫🐻🐍🦍🐒🐵🐱🐿🦇🐄🐮🦉🐏🐑🐼🐀🐁🐭🐹🐖🐷🐩🐗🦃🐔🐓🐋🐳🐟🐠🐡🦏🐘🐙🦑🐧🦔🐨🐦🦆🦐🦀🐤🐸🐢🐥🐌🐣🐚';
+  var maddaddam = function() { // 🐝
+    var boatSize = 80; // zoo.length for realsies
+    var index = Math.floor(Math.random() * boatSize) * 2;
+    var one = String.fromCodePoint((zoo).codePointAt(index));
+    var speed = ((2*boatSize - index) * 0.05) + 1;
+    speed += (speed / 11) * Math.random() - (speed / 22);
     var moo = new Element('marquee', {
       'direction': (Math.random() >= 0.5) ? 'right' : 'left',
-      'scrollamount': (Math.random() * 4) + 1,
+      'scrollamount': speed,
       'text': one,
       'class': "slide"
     });
@@ -100,6 +104,7 @@
         onSuccess: function(json, text) {
           document.id('question_answer').set('html',json.answer);
           document.id('question_loader').destroy();
+          document.id('maddaddam_savannah').destroy();
           document.id('question_reload').show();
         }
       });
