@@ -1,10 +1,24 @@
 {% extends 'layout.html.twig' %}
 
+
+{% block before_content %}
+  <div id="maddaddam_savannah" class=""></div>
+{% endblock %}
+
+
 {% block content %}
 
 <style type="text/css">
   #question_reload {
     display: none;
+  }
+  #maddaddam_savannah {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
   }
   #question_loader {
     display: none;
@@ -51,6 +65,19 @@
 <script type="text/javascript" src="js/cye.js"></script>
 
 <script type="text/javascript">
+
+  var zoo = '🐅🐆🐘🦏🐂🐃🐄🐎🦌🐐🐏🐑🐖🐗🐪🐫🦍🐉🦖🦕🐈🐀🐁🐇🐒🐕🐩🐨🐿🦔🦇🐍🦅🦉🦆🐓🐔🦃🕊🐣🐤🐥🐦🐧🐋🐳🐬🦈🐟🐠🐡🐙🦑🦐🦀🐚🐌🐢🦎🐊🐀🐃🐅🐇🐉🐍🐎🐐🐒🐓🐕🐖🐭🐹🐰🐶🐺🦊🐵🐸🐯🦁🦓🦒🐴🐮🐷🐻🐼🐲🦄🐱';
+  var maddaddam = function() {
+    var one = String.fromCodePoint((zoo).codePointAt(Math.floor(Math.random() * 92) * 2));
+    var moo = new Element('marquee', {
+      'direction': (Math.random() >= 0.5) ? 'right' : 'left',
+      'scrollamount': (Math.random() * 4) + 1,
+      'text': one,
+      'class': "slide"
+    });
+    moo.inject(document.id('maddaddam_savannah'));
+  };
+
   window.addEvent('domready', function(){
     document.body.disableSelection();
 
@@ -59,14 +86,15 @@
     // Validate the Submit button
     document.id('culture_input').smartField = new Cye.SmartField('culture_input',{
       getExpectedValue: function(){return document.id('expected_answer').get('text');},
-      onMatch: function(){document.id('question_submit').set('disabled', false);}
+      onMatch: function(){document.id('question_submit').set('disabled', false);},
+      onKeyPress: function(){if (Math.random() >= 0.5) maddaddam();}
     });
 
     document.id('question_form').addEvent('submit', function(e){
       e.stop();
       document.id('question_submit').set('disabled', true);
 
-      var r = new Request.JSON({
+      var request = new Request.JSON({
         url: this.get('action'),
         method: this.get('method'),
         onSuccess: function(json, text) {
@@ -77,9 +105,9 @@
       });
       var key = document.id('culture_input').smartField.getValue();
       if (key) {
-        r.send({data: this.toQueryString()+'&'+Object.toQueryString({key:key.toBase64()})});
+        request.send({data: this.toQueryString()+'&'+Object.toQueryString({key:key.toBase64()})});
       } else {
-        r.send({data: this.toQueryString()});
+        request.send({data: this.toQueryString()});
       }
 
       document.id('question_loader').show();
@@ -89,3 +117,4 @@
 </script>
 
 {% endblock %}
+
