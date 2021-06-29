@@ -14,5 +14,5 @@ The industrial era's **extinction** of species can largely be faulted on **Greed
 > _**Know your sins.**_
 
 You should hurry and take back political power before it's too late.
-Become a constituent! You can do it! I _know_ you can.
+Become constituent!  You can do it!  I _know_ you can.
 

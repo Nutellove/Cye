@@ -8,6 +8,7 @@ $loader = require_once CYE_ROOT_PATH . 'vendor/autoload.php';
 use Silex\Application;
 use Symfony\Component\Finder\Finder;
 
+
 // Config //////////////////////////////////////////////////////////////////////
 
 $spinners = array( // from web/css/spinners.css

@@ -45,3 +45,8 @@ Scenario: Typing a keyword to a pre-made answer
    When I press "Ask"
     And I wait for 10 second
    Then I should see "I am merely a test."
+
+
+# Now you know everything…
+# As usual, the power was always within you.
+# Farewell!
