@@ -1,0 +1,18 @@
+version: "3"
+
+# Run with:
+#   docker-compose up -d
+
+# Access with http://localhost:8080
+
+services:
+
+  cye:
+    container_name: "cye"
+    # Project is copied in /usr/src/app by the Dockerfile
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      APP_ENV: "dev"

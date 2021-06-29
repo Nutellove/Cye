@@ -1,4 +1,6 @@
 {
+    "name": "cye/cye",
+    "type": "project",
     "require": {
          "silex/silex":                 "~1.0"
         ,"symfony/finder":              "~2.1"

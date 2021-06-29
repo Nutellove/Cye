@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Deprecated."
+
+exit 0;
+
 # Upload the sources to our server, and update the remote database structure.
 # You should always backup the database before publishing.
 

@@ -6,6 +6,8 @@ $loader = require_once CYE_ROOT_PATH . 'vendor/autoload.php';
 //$loader->add('Goutte\Story', __DIR__.'/src');
 
 use Silex\Application;
+use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\Finder\Finder;
 
 
@@ -48,6 +50,7 @@ function get_premade_answer ($keyword, $lang='en') {
     $files = Finder::create()->files()->name($keyword.".md")->in(get_data_dir($lang));
     if ($files->count() > 0) {
         foreach ($files as $file) {
+            /** @var SplFileInfo $file */
             $answer = file_get_contents($file->getRealpath());
             break; // only $files[0] is of interest to us
         }
@@ -120,4 +123,19 @@ $app->get('/answer.json', function(Application $app) use ($twig, $pd) {
 });
 
 
+// Set error handling in dev env
+if (getenv('APP_ENV') !== 'prod') {
+    ini_set('display_errors', 1);
+    error_reporting(-1);
+
+    ErrorHandler::register();
+
+    if ('cli' !== php_sapi_name()) {
+        ExceptionHandler::register();
+    }
+
+    $app['debug'] = true;
+}
+
 $app->run();
+
